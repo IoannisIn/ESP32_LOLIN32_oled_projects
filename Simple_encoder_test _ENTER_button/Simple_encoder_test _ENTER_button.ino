@@ -47,7 +47,7 @@ void setup(){
 	// set starting count value after attaching
 	encoder.setCount(0);
 	encoder.setFilter(1023);
-	attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTimer = millis();encoder.setCount(0);}, RISING);
+	attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTime = millis();encoder.setCount(0);}, RISING);
 }
 
 void loop(){
