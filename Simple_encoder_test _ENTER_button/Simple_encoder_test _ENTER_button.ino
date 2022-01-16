@@ -59,7 +59,7 @@ void loop(){
 }
 
 void centerText(){
-	Serial.println("Encoder count = " + String((int32_t)encoder.getCount()));
+  Serial.println("Encoder count = " + String((int32_t)encoder.getCount()));
   display.clearDisplay();
   display.setTextSize(3);             // Normal 1:1 pixel scale
   display.setTextColor(SSD1306_WHITE);        // Draw white text
