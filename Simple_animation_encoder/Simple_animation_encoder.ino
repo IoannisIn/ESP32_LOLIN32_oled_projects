@@ -28,8 +28,8 @@ int previousValue = 0;
 
 void setup(){
 	
-	Serial.begin(115200);
-	 Wire.begin(5, 4);
+Serial.begin(115200);
+Wire.begin(5, 4);
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C, false, false)) {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;);
@@ -38,17 +38,17 @@ void setup(){
   delay(2000); // Pause for 2 seconds
   display.clearDisplay();
   
-	//ESP32Encoder::useInternalWeakPullResistors=DOWN;
-	// Enable the weak pull up resistors
-	ESP32Encoder::useInternalWeakPullResistors=UP;
 
-	// use pin 19 and 18 for the first encoder
-	encoder.attachHalfQuad(13, 15);
+// Enable the weak pull up resistors
+ESP32Encoder::useInternalWeakPullResistors=UP;
+
+// use pin 13 and 15 for the first encoder
+encoder.attachHalfQuad(13, 15);
 		
-	// set starting count value after attaching
-	encoder.setCount(0);
-  encoder.setFilter(1023);
-  attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTime = millis();encoder.setCount(0);}, RISING);
+// set starting count value after attaching
+encoder.setCount(0);
+encoder.setFilter(1023);
+attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTime = millis();encoder.setCount(0);}, RISING);
 }
 
 void loop(){
