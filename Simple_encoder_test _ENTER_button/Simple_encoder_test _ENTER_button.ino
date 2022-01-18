@@ -27,8 +27,8 @@ int previousValue = 0;
 
 void setup(){
 	
-	Serial.begin(115200);
-	 Wire.begin(5, 4);
+  Serial.begin(115200);
+  Wire.begin(5, 4);
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C, false, false)) {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;);
@@ -37,17 +37,15 @@ void setup(){
   delay(2000); // Pause for 2 seconds
   display.clearDisplay();
   
-	//ESP32Encoder::useInternalWeakPullResistors=DOWN;
-	// Enable the weak pull up resistors
-	ESP32Encoder::useInternalWeakPullResistors=UP;
-
-	// use pin 19 and 18 for the first encoder
-	encoder.attachHalfQuad(13, 15);
-		
-	// set starting count value after attaching
-	encoder.setCount(0);
-	encoder.setFilter(1023);
-	attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTime = millis();encoder.setCount(0);}, RISING);
+  // Enable the weak pull up resistors
+  ESP32Encoder::useInternalWeakPullResistors=UP;
+  // use pin 13 and 15 for the first encoder
+  encoder.attachHalfQuad(13, 15);
+  // set starting count value after attaching
+  encoder.setCount(0);
+  encoder.setFilter(1023);
+  //Attach interrupt for encoder button, while pressing this button it sets the encoder value to zero
+  attachInterrupt(digitalPinToInterrupt(enter_pin), [] {if((millis() - DebounceTime) >= (delayTime )) DebounceTime = millis();encoder.setCount(0);}, RISING);
 }
 
 void loop(){
@@ -59,9 +57,9 @@ void loop(){
 }
 
 void centerText(){
-  Serial.println("Encoder count = " + String((int32_t)encoder.getCount()));
+  Serial.println("Encoder value = " + String((int32_t)encoder.getCount()));
   display.clearDisplay();
-  display.setTextSize(3);             // Normal 1:1 pixel scale
+  display.setTextSize(3);             
   display.setTextColor(SSD1306_WHITE);        // Draw white text
   display.getTextBounds(String((int32_t)encoder.getCount()), 64, 32, &x_0, &y_0, &width, &height);
   display.setCursor((128 - width) / 2, (64 - height) / 2);
